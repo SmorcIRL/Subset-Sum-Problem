@@ -1,0 +1,11 @@
+{
+  "Seed": 42,
+  "SubsetSum": 1000000,
+  "FitnessThreshold": 0.00,
+  "GenerationSize": 1000,
+  "MutationChance": 0.001,
+  "GenerationsMaxCount": null,
+  "Timeout": "00:05:00",
+  "InitialSeeding": "RandomSumUntilExceeding",
+  "GenesSorting": "Hump"
+}
