@@ -54,6 +54,11 @@
                 throw new ArgumentOutOfRangeException(nameof(options.Set), "Set elements should be x > 0 and <= target");
             }
 
+            if (options.Set.Sum() < options.SubsetSum)
+            {
+                throw new ArgumentOutOfRangeException(nameof(options.SubsetSum), "Subset sum cannot exceed the total sum of the set");
+            }
+
             if (options.Set.Length > 128)
             {
                 throw new ArgumentOutOfRangeException(nameof(options.Set));
@@ -331,7 +336,7 @@
                 OneToManyGenesSorting.NoSorting => values.ToArray(),
                 OneToManyGenesSorting.Random => values.OrderBy(_ => random.Next()).ToArray(),
                 OneToManyGenesSorting.Increasing => values.OrderBy(x => x).ToArray(),
-                OneToManyGenesSorting.Hump => GeneralHelper.HumpSort(random, values),
+                OneToManyGenesSorting.Hump => GeneralHelper.HumpSort(values),
                 _ => throw new ArgumentOutOfRangeException(nameof(sorting), sorting, null),
             };
         }

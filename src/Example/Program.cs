@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
+using System.Text.Json;
 using GeneticAlgorithm.OneToMany;
-using Newtonsoft.Json;
 
 namespace Example
 {
@@ -46,8 +46,8 @@ namespace Example
             var configJson = File.ReadAllText(configPath);
             var setJson = File.ReadAllText(setPath);
 
-            var options = JsonConvert.DeserializeObject<Options>(configJson);
-            var set = JsonConvert.DeserializeObject<decimal[]>(setJson);
+            var options = JsonSerializer.Deserialize<Options>(configJson)!;
+            var set = JsonSerializer.Deserialize<decimal[]>(setJson)!;
 
             return new OneToManyGeneticOptions
             {

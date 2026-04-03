@@ -31,15 +31,28 @@
 
             return d.CompareTo(b) < 0 ? (c, d) : (c, b);
         } 
-        
-        public static decimal[] HumpSort(Random random, IEnumerable<decimal> values)
-        {
-            var array = values.OrderBy(_ => random.Next()).ToArray();
 
-            return Enumerable.Empty<decimal>()
-                .Concat(array.Take(array.Length / 2).OrderBy(x => x))
-                .Concat(array.Skip(array.Length / 2).OrderByDescending(x => x))
-                .ToArray();
+        public static decimal[] HumpSort(IEnumerable<decimal> values)
+        {
+            var sorted = values.OrderBy(x => x).ToArray();
+            var result = new decimal[sorted.Length];
+
+            var left = 0;
+            var right = result.Length - 1;
+
+            for (var i = 0; i < sorted.Length; i++)
+            {
+                if ((i & 1) == 0)
+                {
+                    result[left++] = sorted[i];
+                }
+                else
+                {
+                    result[right--] = sorted[i];
+                }
+            }
+
+            return result;
         }
 
         public static bool GetBool(this Random random, double probability = 0.5)

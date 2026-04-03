@@ -48,6 +48,11 @@
                 throw new ArgumentOutOfRangeException(nameof(options.Set), "Set elements should be x > 0 and <= target");
             }
 
+            if (options.Set.Sum() < options.SubsetSum)
+            {
+                throw new ArgumentOutOfRangeException(nameof(options.SubsetSum), "Subset sum cannot exceed the total sum of the set");
+            }
+
             _random = options.Random ?? throw new ArgumentNullException(nameof(options.Random));
             _set = SortValues(options.Set, _random, options.GenesSorting);
             _setSize = _set.Length;
@@ -116,15 +121,15 @@
 
                 var child1 = _nextGeneration[i];
                 var child2 = _nextGeneration[i + 1];
-                
+
                 var countPart1 = _random.Next(1, _setSize - 1);
                 var countPart2 = _setSize - countPart1;
 
                 Array.Copy(parent1.BitMask, child1.BitMask, countPart1);
-                Array.Copy(parent2.BitMask, child1.BitMask, countPart1);
-
                 Array.Copy(parent2.BitMask, countPart1, child1.BitMask, countPart1, countPart2);
-                Array.Copy(parent1.BitMask, countPart1, child1.BitMask, countPart1, countPart2);
+
+                Array.Copy(parent2.BitMask, child2.BitMask, countPart1);
+                Array.Copy(parent1.BitMask, countPart1, child2.BitMask, countPart1, countPart2);
 
                 UpdateFitness(child1);
                 UpdateFitness(child2);
@@ -322,7 +327,7 @@
                 OneToManyGenesSorting.NoSorting => values.ToArray(),
                 OneToManyGenesSorting.Random => values.OrderBy(_ => random.Next()).ToArray(),
                 OneToManyGenesSorting.Increasing => values.OrderBy(x => x).ToArray(),
-                OneToManyGenesSorting.Hump => GeneralHelper.HumpSort(random, values),
+                OneToManyGenesSorting.Hump => GeneralHelper.HumpSort(values),
                 _ => throw new ArgumentOutOfRangeException(nameof(sorting), sorting, null),
             };
         }
