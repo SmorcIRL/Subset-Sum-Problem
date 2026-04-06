@@ -63,6 +63,8 @@ namespace Benchmark.Benchmarks
 
         #endregion
 
+        private static readonly Random _random = new Random();
+
         private decimal[] _initialSet;
         private decimal[] _set1;
         private decimal[] _set2;
@@ -77,16 +79,14 @@ namespace Benchmark.Benchmarks
         [IterationSetup]
         public void IterationSetup()
         {
-            var random = new Random();
-
             switch (SetGenerationMode)
             {
                 case 1:
-                    _set1 = SetGenerator.TakeN(_initialSet, N / 2, random);
-                    _set2 = SetGenerator.TakeN(_initialSet, N / 2, random);
+                    _set1 = SetGenerator.TakeN(_initialSet, N / 2, _random);
+                    _set2 = SetGenerator.TakeN(_initialSet, N / 2, _random);
                     break;
                 case 2:
-                    (_set1, _set2) = SetGenerator.TakeNWithoutIntersection(_initialSet, N / 2, random);
+                    (_set1, _set2) = SetGenerator.TakeNWithoutIntersection(_initialSet, N / 2, _random);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -94,7 +94,7 @@ namespace Benchmark.Benchmarks
 
             _algorithm = new ManyToManyGeneticAlgorithm(new ManyToManyGeneticOptions
             {
-                Random = random,
+                Random = _random,
                 FirstSet = _set1,
                 SecondSet = _set2,
                 FitnessThreshold = (decimal)FitnessThreshold,

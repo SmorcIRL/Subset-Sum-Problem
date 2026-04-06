@@ -25,15 +25,13 @@ namespace Example
                 {
                     Console.WriteLine("==============================================");
                     Console.WriteLine($"Fitness: {result.BestFitness} Subset size: {result.BestSolution.Count}");
-                    Console.WriteLine($"Subset: {string.Join(", ", result.BestSolution)}");
+                    Console.WriteLine($"Subset: {string.Join(", ", result.BestSolution.OrderDescending())}");
 
                     break;
                 }
             }
 
             Console.WriteLine($"Total: {stopwatch.Elapsed.TotalSeconds:F5} (s)");
-
-            Console.ReadLine();
         }
 
         private static OneToManyGeneticOptions GetOptions()

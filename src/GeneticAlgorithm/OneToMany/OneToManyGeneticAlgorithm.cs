@@ -1,6 +1,6 @@
 ﻿namespace GeneticAlgorithm.OneToMany
 {
-    public class OneToManyGeneticAlgorithm
+    public class OneToManyGeneticAlgorithm : IOneToManyGeneticAlgorithm
     {
         private readonly Random _random;
         private readonly decimal[] _set;  
@@ -43,9 +43,9 @@
                 throw new ArgumentOutOfRangeException(nameof(options.MutationChance));
             }
 
-            if (options.Set.Any(x => x <= 0 || options.SubsetSum < x))
+            if (options.Set.Any(x => x <= 0))
             {
-                throw new ArgumentOutOfRangeException(nameof(options.Set), "Set elements should be x > 0 and <= target");
+                throw new ArgumentOutOfRangeException(nameof(options.Set), "Set elements should be positive");
             }
 
             if (options.Set.Sum() < options.SubsetSum)
@@ -227,7 +227,7 @@
 
                         for (var j = 0; j < _setSize; j++)
                         {
-                            individual[j] = _random.GetBool(_mutationChance);
+                            individual[j] = _random.GetBool();
                         }
                     }
 

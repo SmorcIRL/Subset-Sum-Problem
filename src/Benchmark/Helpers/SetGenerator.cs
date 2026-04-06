@@ -2,21 +2,13 @@
 {
     public static class SetGenerator
     {
-        public static decimal[] TakeN(IReadOnlyList<decimal> initialSet, int count, Random random, Func<decimal, bool> filter = default)
+        public static decimal[] TakeN(IReadOnlyList<decimal> initialSet, int count, Random random)
         {
             var result = new decimal[count];
 
             for (var i = 0; i < count; i++)
             {
-                while (true)
-                {
-                    var value = initialSet[random.Next(initialSet.Count)];
-                    if (filter == null || filter(value))
-                    {
-                        result[i] = value;
-                        break;
-                    }
-                }
+                result[i] = initialSet[random.Next(initialSet.Count)];
             }
 
             return result;

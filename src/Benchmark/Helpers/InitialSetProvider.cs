@@ -20,7 +20,7 @@ namespace Benchmark.Helpers
 
             var json = reader.ReadToEnd();
 
-            _initialSet = JsonSerializer.Deserialize<decimal[]>(json);
+            _initialSet = JsonSerializer.Deserialize<decimal[]>(json)!;
 
             return _initialSet;
         }

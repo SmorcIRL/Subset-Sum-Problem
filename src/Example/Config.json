@@ -6,6 +6,6 @@
   "MutationChance": 0.001,
   "GenerationsMaxCount": null,
   "Timeout": "00:05:00",
-  "InitialSeeding": "RandomSumUntilExceeding",
-  "GenesSorting": "Hump"
+  "InitialSeeding": 3,
+  "GenesSorting": 3
 }
